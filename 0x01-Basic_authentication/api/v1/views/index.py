@@ -40,5 +40,7 @@ def errorhandler() -> str:
 
 @app_views.errorhandler(401)
 def aun(error):
-
+    """ Error code
+      Return:
+        the status code for the error"""
     abort(401)
