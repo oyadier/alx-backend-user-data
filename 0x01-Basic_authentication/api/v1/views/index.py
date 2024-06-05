@@ -58,7 +58,8 @@ def forbidden() -> str:
 def erorhandler(error):
     """ Error code
       Return:
-        the status code for the error"""
+        the status code for the error
+    """
     if error.code == 401:
         abort(401)
     else:
