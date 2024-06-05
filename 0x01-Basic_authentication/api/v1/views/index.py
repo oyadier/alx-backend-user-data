@@ -34,7 +34,7 @@ def unauthorized() -> str:
     Return:
       - the error message
     """
-    response = jsonify({'error': 'unauthorized'})
+    response = jsonify({'error': 'Unauthorized'})
     response.status_code = 401
     return response
 
