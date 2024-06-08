@@ -46,11 +46,11 @@ def unauthorized() -> str:
     response.status_code = 401
     return response
 
-    """All custome Error handlers """
-
 
 @app.before_request
 def befor_request():
+    '''First methods to inspect api call
+    '''
     if auth is None:
         return
     exclede_path = ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
