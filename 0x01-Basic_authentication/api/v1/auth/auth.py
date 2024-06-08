@@ -13,15 +13,24 @@ class Auth:
         if path is not None:
             if path.endswith("/"):
                 path = path[:-1]
+            path = path
 
-        if path is None or excluded_paths is None or len(excluded_paths) < 1:
+        if (
+            path is None
+            or excluded_paths is None
+            or excluded_paths == []
+            or (len(excluded_paths) < 1)
+            or path not in excluded_paths
+        ):
             return True
-        if path in excluded_paths or "/api/v1/status/" in excluded_paths:
+        if "/api/v1/status/" in excluded_paths or path in excluded_paths:
             return False
 
     def authorization_header(self, request=None) -> str:
         """The request auth header"""
-        return None
+        if request is None:
+            return None
+        return request.headers.get("Authorization", None)
 
     def current_user(self, request=None) -> TypeVar("User"):
         """Getting the current user"""
