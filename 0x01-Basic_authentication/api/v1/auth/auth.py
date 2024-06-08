@@ -1,37 +1,49 @@
 #!/usr/bin/env python3
-"""An authentication Module"""
+""" Module of Authentication
+"""
 from flask import request
 from typing import List, TypeVar
-from models.user import User
 
 
 class Auth:
-    """An authentication class for all logins"""
+    """ Class to manage the API authentication """
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Checks if the action requires an authentication"""
-        if path is not None:
-            if path.endswith("/"):
-                path = path[:-1]
-            path = path
-
-        if (
-            path is None
-            or excluded_paths is None
-            or excluded_paths == []
-            or (len(excluded_paths) < 1)
-            or path not in excluded_paths
-        ):
+        """ Method for validating if endpoint requires auth """
+        if path is None or excluded_paths is None or excluded_paths == []:
             return True
-        if "/api/v1/status/" in excluded_paths or path in excluded_paths:
-            return False
+
+        l_path = len(path)
+        if l_path == 0:
+            return True
+
+        slash_path = True if path[l_path - 1] == '/' else False
+
+        tmp_path = path
+        if not slash_path:
+            tmp_path += '/'
+
+        for exc in excluded_paths:
+            l_exc = len(exc)
+            if l_exc == 0:
+                continue
+
+            if exc[l_exc - 1] != '*':
+                if tmp_path == exc:
+                    return False
+            else:
+                if exc[:-1] == path[:l_exc - 1]:
+                    return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
-        """The request auth header"""
+        """ Method that handles authorization header """
         if request is None:
             return None
+
         return request.headers.get("Authorization", None)
 
-    def current_user(self, request=None) -> TypeVar("User"):
-        """Getting the current user"""
+    def current_user(self, request=None) -> TypeVar('User'):
+        """ Validates current user """
         return None
