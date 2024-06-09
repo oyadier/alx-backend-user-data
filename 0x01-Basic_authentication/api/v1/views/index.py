@@ -34,7 +34,6 @@ def unauthorized() -> str:
     Return:
       - the error message
     """
-    print('Unathorized called')
     abort(401)
 
 
