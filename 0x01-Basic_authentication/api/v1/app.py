@@ -15,9 +15,11 @@ auth = None
 auth_type = getenv("AUTH_TYPE", "auth")
 if auth == "auth":
     from api.v1.auth.auth import Auth
+
     auth = Auth()
 
 from api.v1.auth.basic_auth import BasicAuth
+
 auth = BasicAuth()
 
 
@@ -47,8 +49,7 @@ def unauthorized(error) -> str:
 
 @app.before_request
 def befor_request():
-    """First methods to inspect api
-    """
+    """First methods to inspect api"""
     if auth:
         exclede_path = [
             "/api/v1/status/",
