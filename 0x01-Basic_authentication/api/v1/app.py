@@ -26,36 +26,31 @@ def not_found(error) -> str:
 
 
 @app.errorhandler(403)
-def forbidden() -> str:
+def forbidden(error) -> str:
     """GET /api/v1/error
     Return:
       - the error message (forbidden)
     """
-    response = jsonify({"error": "Forbidden"})
-    response.status_code = 403
-    return response
+    return jsonify({"error": "Forbidden"}), 403
 
 
 @app.errorhandler(401)
-def unauthorized() -> str:
+def unauthorized(error) -> str:
     """GET /api/v1/error
     Return:
       - the error message
     """
-    response = jsonify({"error": "Unauthorized"})
-    response.status_code = 401
-    return response
+    return jsonify({"error": "Unauthorized"}), 401
 
 
 @app.before_request
 def befor_request():
-    '''First methods to inspect api call
-    '''
+    """First methods to inspect api"""
     if auth is None:
         return
     exclede_path = ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
     if not auth.require_auth(request.path, exclede_path):
-        return
+        pass
     if auth.authorization_header(request) is None:
         abort(401)
     if auth.current_user(request) is None:
