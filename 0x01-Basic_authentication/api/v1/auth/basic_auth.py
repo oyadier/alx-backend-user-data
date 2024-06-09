@@ -30,14 +30,14 @@ class BasicAuth(Auth):
         try:
             base64.b64decode(base64_authorization_header)
             valid = True
-        except TypeError:
-            pass
+        except Exception:
+            valid = False
         if (
             isinstance(base64_authorization_header, str)
             and base64_authorization_header is not None
             and valid
         ):
             decode = base64.b64decode(base64_authorization_header)
-            return decode.decode("utf-8")
+            return decode.decode('utf-8')
 
         return None
