@@ -10,8 +10,7 @@ import base64
 class BasicAuth(Auth):
     """A subclass of Auth class"""
 
-    def extract_base64_authorization_header(self,
-                                            authorization_header: str) -> str:
+    def extract_base64_authorization_header(self, authorization_header: str) -> str:
         """Extracting base64 authorization header for Auth hearder"""
         if (
             isinstance(authorization_header, str)
@@ -25,6 +24,7 @@ class BasicAuth(Auth):
     def decode_base64_authorization_header(
         self, base64_authorization_header: str
     ) -> str:
+        '''Decode a base64 binary code for a string'''
         valid = None
         try:
             base64.b64decode(base64_authorization_header)
