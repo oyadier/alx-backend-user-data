@@ -46,7 +46,7 @@ def unauthorized(error) -> str:
 
 
 @app.before_request
-def befor_request():
+def authenticated_route():
     """First methods to inspect api"""
     if auth:
         exclede_path = [
