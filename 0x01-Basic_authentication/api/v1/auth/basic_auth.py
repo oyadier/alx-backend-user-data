@@ -3,15 +3,16 @@
 """
 
 
+from typing import TypeVar
 from api.v1.auth.auth import Auth
 import base64
+from models.user import User
 
 
 class BasicAuth(Auth):
     """A subclass of Auth class"""
 
-    def extract_base64_authorization_header(self,
-                                            authorization_header: str) -> str:
+    def extract_base64_authorization_header(self, authorization_header: str) -> str:
         """Extracting base64 authorization header for Auth hearder"""
         if (
             isinstance(authorization_header, str)
@@ -57,3 +58,20 @@ class BasicAuth(Auth):
             return (email, password)
 
         return (None, None)
+
+    def user_object_from_credentials(
+        self, user_email: str, user_pwd: str
+    ) -> TypeVar("User"):
+        """Get user object based on the email and password from base64"""
+
+        if type(user_email) is str and type(user_pwd) is str:
+            try:
+                user = User().search({"email": user_email})
+                valid = user[0].is_valid_password(user_pwd)
+            except Exception:
+                return None
+            if len(user) <= 0:
+                return None
+            if valid:
+                return user[0]
+        return None
