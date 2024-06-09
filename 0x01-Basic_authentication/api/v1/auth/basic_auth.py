@@ -12,7 +12,8 @@ from models.user import User
 class BasicAuth(Auth):
     """A subclass of Auth class"""
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(self,
+                                            authorization_header: str) -> str:
         """Extracting base64 authorization header for Auth hearder"""
         if (
             isinstance(authorization_header, str)
