@@ -28,40 +28,20 @@ def stats() -> str:
     return jsonify(stats)
 
 
-@app_views.errorhandler(401)
 @app_views.route("/unauthorized", methods=["GET"], strict_slashes=False)
 def unauthorized() -> str:
     """GET /api/v1/error
     Return:
       - the error message
     """
-    response = jsonify({"error": "Unauthorized"})
-    response.status_code = 401
-    return response
+    print('Unathorized called')
+    abort(401)
 
 
-@app_views.errorhandler(403)
 @app_views.route("/forbidden", methods=["GET"], strict_slashes=False)
 def forbidden() -> str:
     """GET /api/v1/error
     Return:
       - the error message (forbidden)
     """
-    response = jsonify({"error": "Forbidden"})
-    response.status_code = 403
-    return response
-
-    """All custome Error handlers """
-
-
-@app_views.errorhandler(401)
-@app_views.errorhandler(403)
-def erorhandler(error):
-    """Error code
-    Return:
-      the status code for the error
-    """
-    if error.code == 401:
-        abort(401)
-    else:
-        abort(403)
+    abort(403)
