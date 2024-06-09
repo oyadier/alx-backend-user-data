@@ -50,7 +50,7 @@ def befor_request():
         return
     exclede_path = ["/api/v1/status/", "/api/v1/unauthorized/", "/api/v1/forbidden/"]
     if not auth.require_auth(request.path, exclede_path):
-        pass
+        return
     if auth.authorization_header(request) is None:
         abort(401)
     if auth.current_user(request) is None:
