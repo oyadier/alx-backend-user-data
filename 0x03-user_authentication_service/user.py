@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''Base module for sql'''
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
