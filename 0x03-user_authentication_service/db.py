@@ -39,4 +39,4 @@ class DB:
         user.hashed_password = hashed_password
         self._session.add(user)
         self._session.commit()
-        self._session.close()
+        return user
