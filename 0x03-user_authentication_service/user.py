@@ -3,6 +3,9 @@
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer
+import logging
+
+logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
 Base = declarative_base()
 
 
